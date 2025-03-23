@@ -1,0 +1,128 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset238 Calibri;}{\f2\fnil Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang21 Aby wy\f1\'b3\'b9czy\'e6 komputer przez LAN (sie\'e6 lokaln\'b9), musisz wykorzysta\'e6 funkcj\'ea zdalnego wy\'b3\'b9czania, kt\f0\lang1033\'f3ra wymaga kilku krok\'f3w w konfiguracji. Mo\f1\'bfna to zrobi\'e6 przy u\'bfyciu protoko\'b3u Wake-on-LAN (WOL) lub narz\'eadzi takich jak SSH lub PowerShell w systemach Windows. Oto jak to zrobi\'e6:\par
+\par
+1. Wake-on-LAN (WOL) \f2\endash  W\f1\'b3\'b9czenie komputera\par
+Wake-on-LAN (WOL) s\'b3u\'bfy do w\'b3\'b9czania komputer\f0\'f3w zdalnie, ale z jego pomoc\f1\'b9 nie wy\'b3\'b9czysz komputera. Mo\'bfesz jednak u\'bfy\'e6 tej technologii, aby wybudzi\'e6 komputer z u\'9cpienia lub w\'b3\'b9czania, a nast\'eapnie u\'bfy\'e6 odpowiednich narz\'eadzi do wy\'b3\'b9czenia systemu.\par
+\par
+2. Zdalne wy\'b3\'b9czanie komputera przez LAN w systemie Windows\par
+Do zdalnego wy\'b3\'b9czania komputera w Windows mo\'bfna u\'bfy\'e6 wbudowanego narz\'eadzia Powershell lub CMD (Command Prompt).\par
+\par
+Krok 1: W\'b3\'b9cz funkcje zdalnego dost\'eapu\par
+W\'b3\'b9cz zdalne zarz\'b9dzanie komputerem (WMI):\par
+\par
+Otw\f0\'f3rz "Panel sterowania" > "Programy" > "W\f1\'b3\'b9cz lub wy\'b3\'b9cz funkcje systemu Windows".\par
+\par
+Upewnij si\'ea, \'bfe opcja "Zdalne zarz\'b9dzanie" (Windows Management Instrumentation) jest w\'b3\'b9czona.\par
+\par
+W\'b3\'b9cz zdalny dost\'eap (na komputerze, kt\f0\'f3ry b\f1\'eadzie wy\'b3\'b9czany):\par
+\par
+Otw\f0\'f3rz "M\'f3j komputer" > kliknij prawym przyciskiem myszy i wybierz "W\f1\'b3a\'9cciwo\'9cci".\par
+\par
+Przejd\'9f do "Zaawansowane ustawienia systemu", wybierz "Zdalny" i zaznacz opcj\'ea "Zezwalaj na po\'b3\'b9czenia zdalne z tego komputera".\par
+\par
+Krok 2: U\'bfyj narz\'eadzi do wy\'b3\'b9czenia komputera\par
+Komenda w PowerShell: Na komputerze, kt\f0\'f3ry chcesz u\f1\'bfy\'e6 do wy\'b3\'b9czenia innego, otw\f0\'f3rz PowerShell i wprowad\f1\'9f nast\'eapuj\'b9c\'b9 komend\'ea:\par
+\par
+powershell\par
+Kopiuj\par
+Stop-Computer -ComputerName "NazwaKomputera" -Credential (Get-Credential)\par
+Komenda ta poprosi o podanie danych logowania do zdalnego komputera i wy\'b3\'b9czy go.\par
+\par
+Komenda w CMD (Command Prompt): Mo\'bfesz r\f0\'f3wnie\f1\'bf u\'bfy\'e6 wiersza polece\'f1 (CMD) na komputerze, z kt\f0\'f3rego chcesz wy\f1\'b3\'b9czy\'e6 inny komputer:\par
+\par
+bash\par
+Kopiuj\par
+shutdown /s /f /t 0 /m {{\field{\*\fldinst{HYPERLINK "\\\\\\\\NazwaKomputera"}}{\fldrslt{\\\\NazwaKomputera\ul0\cf0}}}}\f1\fs22\par
+/s \f2\endash  wy\f1\'b3\'b9cza komputer.\par
+\par
+/f \f2\endash  wymusza zamkni\f1\'eacie aplikacji.\par
+\par
+/t 0 \f2\endash  ustawia czas na 0 sekund.\par
+\par
+/m {{\field{\*\fldinst{HYPERLINK "\\\\\\\\NazwaKomputera"}}{\fldrslt{\\\\NazwaKomputera\ul0\cf0}}}}\f2\fs22  \endash  okre\f1\'9cla komputer zdalny, kt\f0\'f3ry ma zosta\f1\'e6 wy\'b3\'b9czony.\par
+\par
+3. Zdalne wy\'b3\'b9czanie komputera przez LAN w systemie Linux\par
+Je\'9cli u\'bfywasz systemu Linux, mo\'bfna u\'bfy\'e6 protoko\'b3u SSH do zdalnego wy\'b3\'b9czania komputera.\par
+\par
+Krok 1: W\'b3\'b9cz SSH na komputerze, kt\f0\'f3ry chcesz wy\f1\'b3\'b9czy\'e6\par
+Zainstaluj i uruchom serwer SSH (je\'9cli jeszcze go nie masz):\par
+\par
+bash\par
+Kopiuj\par
+sudo apt install openssh-server\par
+Sprawd\'9f, czy serwer dzia\'b3a:\par
+\par
+bash\par
+Kopiuj\par
+sudo systemctl status ssh\par
+Krok 2: Zdalne wy\'b3\'b9czanie przez SSH\par
+Na komputerze, z kt\f0\'f3rego chcesz wy\f1\'b3\'b9czy\'e6 inny komputer, u\'bfyj komendy SSH:\par
+\par
+bash\par
+Kopiuj\par
+ssh username@ip_address sudo shutdown now\par
+username \f2\endash  Twoja nazwa u\f1\'bfytkownika na zdalnym komputerze.\par
+\par
+ip_address \f2\endash  adres IP komputera, kt\f0\'f3ry chcesz wy\f1\'b3\'b9czy\'e6.\par
+\par
+sudo shutdown now \f2\endash  natychmiastowe wy\f1\'b3\'b9czenie.\par
+\par
+4. Zdalne wy\'b3\'b9czanie z aplikacjami\par
+S\'b9 tak\'bfe aplikacje, kt\f0\'f3re umo\f1\'bfliwiaj\'b9 zdalne wy\'b3\'b9czanie komputer\f0\'f3w w sieci, takie jak TeamViewer, AnyDesk, czy Remote Desktop (RDP).\par
+\par
+Podsumowanie:\par
+Zdalne wy\f1\'b3\'b9czenie komputera przez LAN mo\'bfna zrealizowa\'e6 za pomoc\'b9 PowerShell, CMD (Windows), SSH (Linux) lub aplikacji takich jak TeamViewer. Wa\'bfne jest, aby odpowiednio skonfigurowa\'e6 zdalny dost\'eap i mie\'e6 odpowiednie uprawnienia.\par
+\par
+\par
+Powiedzia\'b3e\'9c(-a\'9c):\par
+jezeli na komputerze z ktorego chce wylaczac komputery nie mam wersji pro tylko home b\'eadzie to przeszkod\'b9?\par
+ChatGPT powiedzia\'b3:\par
+Tak, je\'9cli masz system Windows Home, to niekt\f0\'f3re funkcje, kt\'f3re s\f1\'b9 dost\'eapne w wersji Pro, b\'ead\'b9 ograniczone, szczeg\f0\'f3lnie te zwi\f1\'b9zane z zarz\'b9dzaniem zdalnym komputerem.\par
+\par
+Wersja Home systemu Windows nie posiada wbudowanego narz\'eadzia do zdalnego wy\'b3\'b9czania komputera przez Remote Desktop (RDP), poniewa\'bf ta funkcja jest dost\'eapna tylko w wersji Pro i wy\'bfszych. Jednak mo\'bfesz nadal wy\'b3\'b9czy\'e6 komputer zdalnie za pomoc\'b9 innych narz\'eadzi i metod, kt\f0\'f3re nie wymagaj\f1\'b9 wersji Pro. Oto kilka alternatyw:\par
+\par
+1. Zdalne wy\'b3\'b9czanie przez WMI (Windows Management Instrumentation)\par
+Je\'9cli chcesz wy\'b3\'b9czy\'e6 komputer przez sie\'e6, ale nie masz wersji Pro, mo\'bfesz u\'bfy\'e6 PowerShell lub CMD do zdalnego wy\'b3\'b9czania komputera, o ile w\'b3\'b9czysz odpowiednie us\'b3ugi na komputerze, kt\f0\'f3ry chcesz wy\f1\'b3\'b9czy\'e6.\par
+\par
+Aby to zrobi\'e6, musisz mie\'e6 w\'b3\'b9czony dost\'eap do Windows Management Instrumentation (WMI) i zdalny dost\'eap na komputerze docelowym.\par
+\par
+Kroki:\par
+Na komputerze, kt\f0\'f3ry chcesz zdalnie wy\f1\'b3\'b9czy\'e6:\par
+\par
+W\'b3\'b9cz Udost\'eapnianie plik\f0\'f3w i drukarek i WMI w zaporze sieciowej.\par
+\par
+Upewnij si\f1\'ea, \'bfe masz uprawnienia do zdalnego wykonywania komend.\par
+\par
+Na komputerze z systemem Home, z kt\f0\'f3rego chcesz wys\f1\'b3a\'e6 polecenie:\par
+\par
+Otw\f0\'f3rz PowerShell i u\f1\'bfyj komendy:\par
+\par
+powershell\par
+Kopiuj\par
+Stop-Computer -ComputerName "NazwaKomputera" -Credential (Get-Credential)\par
+lub w CMD:\par
+\par
+bash\par
+Kopiuj\par
+shutdown /s /f /t 0 /m {{\field{\*\fldinst{HYPERLINK "\\\\\\\\NazwaKomputera"}}{\fldrslt{\\\\NazwaKomputera\ul0\cf0}}}}\f1\fs22\par
+2. U\'bfywanie narz\'eadzi zewn\'eatrznych\par
+Je\'9cli nie masz wersji Pro i nie chcesz zmienia\'e6 konfiguracji systemu, mo\'bfesz u\'bfy\'e6 aplikacji takich jak:\par
+\par
+TeamViewer \f2\endash  popularne narz\f1\'eadzie do zdalnego sterowania, kt\f0\'f3re pozwala na wy\f1\'b3\'b9czanie komputer\f0\'f3w zdalnie. Jest dost\f1\'eapne zar\f0\'f3wno na Windows Home, jak i Pro.\par
+\par
+AnyDesk \f2\endash  podobnie jak TeamViewer, umo\f1\'bfliwia zdalne wy\'b3\'b9czanie komputera i jest kompatybilny z wersjami Home systemu Windows.\par
+\par
+PsExec (narz\'eadzie od Sysinternals) \f2\endash  pozwala na uruchamianie proces\f0\'f3w na zdalnym komputerze. Mo\f1\'bfesz uruchomi\'e6 komend\'ea wy\'b3\'b9czania komputera:\par
+\par
+bash\par
+Kopiuj\par
+psexec {{\field{\*\fldinst{HYPERLINK "\\\\\\\\NazwaKomputera"}}{\fldrslt{\\\\NazwaKomputera\ul0\cf0}}}}\f1\fs22  shutdown /s /f /t 0\par
+3. U\'bfywanie PowerShell i zdalnych po\'b3\'b9cze\'f1\par
+Z Windows Home mo\'bfesz tak\'bfe u\'bfywa\'e6 PowerShella do wykonywania polece\'f1 na komputerze, pod warunkiem, \'bfe skonfigurujesz odpowiednie ustawienia na komputerze, kt\f0\'f3ry chcesz zdalnie wy\f1\'b3\'b9czy\'e6 (w tym zdalny dost\'eap do PowerShell).\par
+\par
+Podsumowanie:\par
+Wersja Home systemu Windows ma ograniczenia dotycz\'b9ce zdalnego dost\'eapu, ale mo\'bfesz nadal zdalnie wy\'b3\'b9cza\'e6 komputer, korzystaj\'b9c z narz\'eadzi takich jak PowerShell, CMD, TeamViewer, AnyDesk lub PsExec. Wa\'bfne jest, aby skonfigurowa\'e6 odpowiednio zapor\'ea sieciow\'b9, us\'b3ugi WMI i mie\'e6 uprawnienia do wykonywania zdalnych polece\'f1 na komputerze docelowym.\\\f0\lang21\par
+}
+ 
